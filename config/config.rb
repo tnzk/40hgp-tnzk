@@ -1,15 +1,16 @@
 # Configure the application 
 options = {
   'development' => {
-    :database => "sqlite3://#{ENV['APP_ROOT']}/db/nobela_jp.db",
+    :database => "sqlite3://#{ENV['APP_ROOT']}/db/40hgp.db",
     :port     => 3030
   }
 }
-nobela_conf = options[ENV['RACK_ENV']]
+
+RACK_ENV = ENV['RACK_ENV'] ||= 'development'
+nobela_conf = options[RACK_ENV]
 
 # Load Standard Libraries
 require 'digest/sha2'
-require 'jcode'
 
 # Load gems
 require 'dm-core'
@@ -28,11 +29,11 @@ Ramaze.options.mode = :live
 Ramaze.options.adapter.port = nobela_conf[:port]
 Ramaze.options.roots = [ENV['APP_ROOT']]
 Ramaze.options.views = ['views']
-Ramaze.options.cache.session = Ramaze::Cache::MemCache
+#Ramaze.options.cache.session = Ramaze::Cache::MemCache
 
 # Load models
-Ramaze.acquire "#{ENV['APP_ROOT']}/models/*"
+Ramaze.acquire "#{ENV['APP_ROOT']}/model/*"
 
 # Load controllers
-Ramaze.acquire "#{ENV['APP_ROOT']}/lib/nobela/jp/*"
+# Ramaze.acquire "#{ENV['APP_ROOT']}/lib/nobela/jp/*"
 
