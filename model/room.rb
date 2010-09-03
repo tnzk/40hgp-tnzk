@@ -9,3 +9,4 @@ class Room
   timestamps :on
 
 end
+

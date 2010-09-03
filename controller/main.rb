@@ -5,10 +5,14 @@
 #  map '/otherurl'
 # this will force the controller to be mounted on: /otherurl
 
-class MainController < Controller
-  # the index action is called automatically when no other action is specified
+class MainController < Ramaze::Controller
+  map '/'
+  engine :Erubis
+  layout :default
+
   def index
     @title = 'Shared - Multiplayer Online Rogue-like game'
+    @rooms = Room.all
   end
 
   # the string returned at the end of the function is used as the html body

@@ -28,11 +28,12 @@ DataMapper.setup(:default, nobela_conf[:database])
 Ramaze.options.mode = :live
 Ramaze.options.adapter.port = nobela_conf[:port]
 Ramaze.options.roots = [ENV['APP_ROOT']]
-Ramaze.options.views = ['views']
+Ramaze.options.views = ['view']
 #Ramaze.options.cache.session = Ramaze::Cache::MemCache
 
 # Load models
-Ramaze.acquire "#{ENV['APP_ROOT']}/model/*"
+$: << '.'
+require 'model/room'
 
 # Load controllers
 # Ramaze.acquire "#{ENV['APP_ROOT']}/lib/nobela/jp/*"
