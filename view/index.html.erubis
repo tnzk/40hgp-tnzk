@@ -1,6 +1,19 @@
+<div id="rooms">
+  <div id="title">Rooms available</div>
+  <ul>
+    <li class="e">test</li>
+    <li class="o">test</li>
+   <% @rooms.each do -%>
+    test
+   <% end -%>
+  </ul>
+  <div id="create">
+    <a href="/room/create">Create new room...</a>
+  </div>
+</div>
+
+
 <p><strong>Shared</strong> - Multiplayer Online Rogue-like game</p>
 <p>
 This is just a cheap game pretenting to be <a href="http://en.wikipedia.org/wiki/Mystery_Dungeon:_Shiren_the_Wanderer" target="_blank">風来のシレン</a> and is very clone, the only one thing different is that you can play this with (an)other player(s).
 </p>
-<div id="rooms">trst
-</div>

@@ -1,7 +1,7 @@
 # Configure the application 
 options = {
   'development' => {
-    :database => "sqlite3://#{ENV['APP_ROOT']}/db/40hgp.db",
+    :database => "sqlite3://#{Ramaze.options.roots.first}/db/40hgp.db",
     :port     => 3030
   }
 }
@@ -27,7 +27,7 @@ DataMapper.setup(:default, nobela_conf[:database])
 # Setup Ramaze options
 Ramaze.options.mode = :live
 Ramaze.options.adapter.port = nobela_conf[:port]
-Ramaze.options.roots = [ENV['APP_ROOT']]
+#Ramaze.options.roots = [ENV['APP_ROOT']]
 Ramaze.options.views = ['view']
 #Ramaze.options.cache.session = Ramaze::Cache::MemCache
 

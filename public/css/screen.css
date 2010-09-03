@@ -17,6 +17,7 @@ h1 > strong {
 }
 
 body {
+    font-size: 14px;
     margin: 0;
     background: #fff;
 }
@@ -28,9 +29,50 @@ body {
 }
 
 p {
-    margin: 1em;
+    margin: 1em 2em;
+    text-indent: 1em;
 }
 
 ul, ol {
     margin-left: 3em;
+}
+
+div#rooms {
+    margin: 1em 3em;
+    border: #555 solid 1px;
+    width: 300px;
+    float: right;
+}
+div#rooms > div#title {
+    font-weight: bold;
+    padding: 5px;
+    background: #e6abff;
+}
+div#rooms > div#create {
+    font-weight: normal;
+    font-size: 12px;
+    padding: 5px;
+    border-top: double 3px #ddd;
+    background: #333;
+}
+div#rooms > div#create > a:link, div#rooms > div#create > a:visited {
+    color: #ddd;
+    text-decoration: under-line;
+}
+div#rooms > div#create > a:active, div#rooms > div#create > a:hover {
+    color: #d55;
+    text-decoration: none;
+}
+div#rooms > ul {
+    margin: 0;
+    list-style-type: none;
+}
+div#rooms > ul > li {
+    padding: 5px 15px;
+}
+div#rooms > ul > li.e {
+    background-color: #fff;
+}
+div#rooms > ul > li.o {
+    background-color: #ddd;
 }
