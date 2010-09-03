@@ -3,7 +3,7 @@
   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title><%= @title %> | Share - Multiplayer Online Rogue-like game</title>
+    <title><%= @title %></title>
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -116,7 +116,7 @@
     });
   });
 </script>
-    <h1><strong>Share</strong> - Multiplayer Online Rogue-like game</h1>
+    <h1><%= @title.sub('Shared', '<strong>Shared</strong>') %></h1>
     <ul id="head_panel">
       <% if current_account %>
         <li><a href="/home">Dashboard</a></li>
@@ -153,14 +153,6 @@
   $('.head_dialog .closing').click(function(){
     $('.head_dialog').fadeOut(250);
     return false;
-  });
-
-  $('.need_signin').click(function(){
-    <% if current_account -%>
-    <% else -%>
-      lolDialog('ログインしてください');
-      return false;
-    <% end -%>
   });
 
 </script>

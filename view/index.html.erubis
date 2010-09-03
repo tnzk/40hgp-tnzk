@@ -1,14 +1,18 @@
 <div id="rooms">
   <div id="title">Rooms available</div>
   <ul>
-    <li class="e">test</li>
-    <li class="o">test</li>
-   <% @rooms.each do -%>
-    test
+   <% i = 0 %>
+   <% if @rooms -%>
+   <% @rooms.each do |room| -%>
+    <li class="<%= (i&1 == 0) ? 'e' : 'o' %>">
+      <a href="/room/show/<%= room.id %>" class="need_signin"><%=h room.name %></a>
+    </li>
+    <% i += 1 %>
+   <% end -%>
    <% end -%>
   </ul>
   <div id="create">
-    <a href="/room/create">Create new room...</a>
+    <a href="/room/create" class="need_signin">Create new room...</a>
   </div>
 </div>
 

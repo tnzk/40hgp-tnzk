@@ -16,6 +16,8 @@ class Account
   validates_format_of :name,  :with => /^[0-9a-z_]+$/, :message => 'Invalid character'
   validates_format_of :email, :as => :email_address,   :message => 'Invalid mail address'
 
+  has n, :rooms
+
   def gravatar(size = 48)
     url = self.gravatar_url( size)
     "<img src=\"#{url}\" alt=\"#{self.pen_name_s}\" />"

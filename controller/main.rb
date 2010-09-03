@@ -13,7 +13,7 @@ class MainController < Ramaze::Controller
 
   
   def index
-    @title = 'Shared - Multiplayer Online Rogue-like game'
+    @title = 'Home'
     @rooms = Room.all
   end
 
@@ -36,8 +36,12 @@ class MainController < Ramaze::Controller
       name = request['name']
       password = passwd( request['password'])
       @account = Account.first( :name => name, :password => password)
-      session[:account] = @account.id if @account
-      result = true
+      if @account
+        session[:account] = @account.id 
+        result = true
+      else
+        result = false
+      end
     end
     "(#{{'result' => result}.to_json})"
   end
