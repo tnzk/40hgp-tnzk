@@ -16,7 +16,7 @@
     #{css 'screen'}
   </head>
   <body>
-    <h1>#{@title}</h1>
+    <h1>#{@title.sub('Shared', '<strong>Shared</strong>')}</h1>
     <div id="content">
       #@content
     </div>

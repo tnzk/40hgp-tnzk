@@ -1,32 +1,36 @@
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
-  text-align: center;
-  border-bottom: #aaa 1px solid;
-  background: #ddd;
-  color: #333;
-  margin: 0;
-  padding: 0.5em;
+    text-align: center;
+    border-bottom: #aaa 1px solid;
+    background: #ddd;
+    color: #333;
+    margin: 0;
+    padding: 0.5em;
+}
+
+h1 > strong {
+    color: #6a2c8f;
 }
 
 body {
-  margin: 0;
-  background: #fff;
+    margin: 0;
+    background: #fff;
 }
 
 #content {
-  margin: 1em;
-  background: #fff;
-  padding: 1em;
+    margin: 1em;
+    background: #fff;
+    padding: 1em;
 }
 
 p {
-  margin: 1em;
+    margin: 1em;
 }
 
 ul, ol {
-  margin-left: 3em;
+    margin-left: 3em;
 }
