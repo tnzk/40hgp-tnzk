@@ -1,3 +1,6 @@
+<canvas id="display" width="640" height="480">
+</canvas>
+
 階層: <%= @room.floor %><br />
 名前: <%= @room.name %><br />
 参加者: <%= @room.insiders.map{|account| account.name}.join(' / ') %><br />
@@ -6,3 +9,39 @@
 <% else -%>
   <a href="/home/join/<%= @room.id %>">参加する</a>
 <% end -%>
+
+<script type="text/javascript">
+  var offset_x = 170;
+  var offset_y =  90;
+  var chips = [
+    'rgb( 108, 183, 117)',
+    'rgb( 120, 103, 111)',
+    'rgb(  40,  93, 152)',
+    'rgb(   2,  80, 107)',
+    'rgb(  80, 183,  80)'
+  ];
+
+  draw = function( statement){
+    var around = statement.around;
+    var ctx = document.getElementById('display').getContext('2d');
+    for( var i = 0; i < 5; i++){
+      for( var j = 0; j < 5; j++){
+        ctx.fillStyle = chips[around[j][i]];
+        ctx.fillRect( i * 60 + offset_x, j * 60 + offset_y, 60, 60);
+      }
+    }
+  }
+
+  stat = {
+    around: [
+      [ 0, 2, 2, 2, 0],
+      [ 1, 2, 0, 0, 0],
+      [ 0, 2, 0, 1, 0],
+      [ 0, 1, 2, 3, 0],
+      [ 0, 0, 0, 0, 0]
+    ]
+  };
+
+  $().ready( function(){ draw(stat)});
+</script>
+

@@ -146,3 +146,10 @@ div#global_dialog {
     left: 0;
 }
 
+canvas#display {
+    width:  640px;
+    height: 480px;
+    background: #333;
+    float: right;
+    margin: 10px 50px;
+}
