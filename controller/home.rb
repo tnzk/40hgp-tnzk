@@ -1,6 +1,6 @@
 class HomeController < Ramaze::Controller
   engine :Erubis
-  layout :default
+  set_layout_except :default => [:look]
   helper :account_helper
 
   def index
@@ -17,4 +17,12 @@ class HomeController < Ramaze::Controller
     room.leave(current_account.id) if room.joined?(current_account.id)
     redirect '/'
   end
+
+  def look
+    me = current_account
+    json = { :around => Room.get(me.join_id).look(me.x, me.y)
+    }.to_json
+    "(#{json})"
+  end
+
 end

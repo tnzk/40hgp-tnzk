@@ -42,6 +42,10 @@
     ]
   };
 
+  $.get( '/home/look', function(data){
+    draw(eval(data));
+  });
+
   $().ready( function(){ draw(stat)});
 </script>
 

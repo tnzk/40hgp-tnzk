@@ -28,7 +28,7 @@ DataMapper.setup(:default, nobela_conf[:database])
 Ramaze.options.mode = :live
 Ramaze.options.adapter.port = nobela_conf[:port]
 Ramaze.options.views = ['view']
-#Ramaze.options.cache.session = Ramaze::Cache::MemCache
+Ramaze.options.cache.session = Ramaze::Cache::YAML
 
 # Load models
 $: << '.'

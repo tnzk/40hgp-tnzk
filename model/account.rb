@@ -6,6 +6,15 @@ class Account
   property :password,   String,   :required => true,  :length => 128
   property :email,      String,   :required => true
 
+  property :hp,         Integer,  :required => false
+  property :hp_max,     Integer,  :required => false
+  property :mp,         Integer,  :required => false
+  property :mp_max,     Integer,  :required => false
+  property :x,          Integer,  :required => false
+  property :y,          Integer,  :required => false
+
+  property :join_id,    Integer,  :required => false # For relation, workaround
+
   timestamps :at
   timestamps :on
 

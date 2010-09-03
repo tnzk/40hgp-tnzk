@@ -1,11 +1,13 @@
 class Room
   include DataMapper::Resource
 
-  property :id,      Serial
-  property :name,    String,  :default => 'Unnamed room'
-  property :floor,   Integer, :default => 0
-  property :field,   Text
-  property :players, Text,    :default => '[]'
+  property :id,        Serial
+  property :name,      String,  :default => 'Unnamed room'
+  property :floor,     Integer, :default => 0
+  property :field,     Text
+  property :players,   Text,    :default => '[]'
+  property :statement, Text,    :default => '[]'
+ 
 
   timestamps :at
   timestamps :on
@@ -15,6 +17,13 @@ class Room
   def join(user_id)
     self.players = JSON.parse(self.players).push(user_id).to_json
     self.save
+    account = Account.get(user_id)
+    account.x = 0
+    account.y = 0
+    account.hp_max = account.hp = 0
+    account.mp_max = account.mp = 0
+    account.join_id = self.id
+    account.save
   end
 
   def leave(user_id)
@@ -32,10 +41,31 @@ class Room
     JSON.parse(self.players).map{|id| Account.get(id)}
   end
 
+  def look(x,y)
+    field = JSON.parse(self.field)
+    arrs = []
+    5.times{ arrs << ([1]*5)}
+    lx = x - 2
+    ly = y - 2
+    for i in ly...(ly + 5)
+      for j in lx...(lx + 5)
+        arrs[j + 2][i + 2] = field[j][i] if j >= 0 && i >= 0
+      end
+    end
+    arrs
+  end
+
+
   def down!
     self.floor += 1
     # Generate 50x50 blank map and save it as json
-    self.field = ([[0] * 50] * 50).to_json
+    arrs = []
+    seed = [0,2]
+    50.times do
+      seed.reverse!
+      arrs << (seed * 25)
+    end
+    self.field = arrs.to_json
     self.save
   end
 

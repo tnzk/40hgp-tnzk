@@ -48,7 +48,7 @@ class MainController < Ramaze::Controller
 
   def logout
     session[:account] = nil
-    redirect_referer
+    redirect '/'
   end
 
 end
