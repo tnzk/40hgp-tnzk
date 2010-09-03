@@ -3,18 +3,9 @@ options = {
   'development' => {
     :database => "sqlite3://#{ENV['APP_ROOT']}/db/nobela_jp.db",
     :port     => 3030
-  },
-  'production' => { 
-    :database => { :adapter  => 'mysql',
-                   :database => 'nobela',
-                   :username => 'nobela',
-                   :password => 'Nq70849tM',
-                   :host     => 'db.opentaka.org'},
-    :port     => 80
   }
 }
 nobela_conf = options[ENV['RACK_ENV']]
-
 
 # Load Standard Libraries
 require 'digest/sha2'
