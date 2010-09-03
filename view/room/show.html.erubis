@@ -1,1 +1,8 @@
-test
+階層: <%= @room.floor %><br />
+名前: <%= @room.name %><br />
+参加者: <%= @room.insiders.map{|account| account.name}.join(' / ') %><br />
+<% if @room.joined?(current_account.id) -%>
+  <a href="/home/leave/<%= @room.id %>">退出する</a>
+<% else -%>
+  <a href="/home/join/<%= @room.id %>">参加する</a>
+<% end -%>

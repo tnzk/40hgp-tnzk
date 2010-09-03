@@ -38,4 +38,5 @@ require 'model/account'
 # Load controllers
 require 'controller/main'
 require 'controller/room'
+require 'controller/home'
 
