@@ -8,17 +8,43 @@
 class MainController < Ramaze::Controller
   map '/'
   engine :Erubis
-  layout :default
+  set_layout_except :default => [:signup, :login, :logout]
+  helper :account_helper
 
+  
   def index
     @title = 'Shared - Multiplayer Online Rogue-like game'
     @rooms = Room.all
   end
 
-  # the string returned at the end of the function is used as the html body
-  # if there is no template for the action. if there is a template, the string
-  # is silently ignored
-  def notemplate
-    "there is no 'notemplate.xhtml' associated with this action"
+  def signup
+    @title = 'Sign up'
+    if request.post?
+      name = request['name']
+      mail = request['mail']
+      password = passwd( request['password'])
+      @account = Account.create( :name => name, :password => password, :email => mail)
+      result = @account.save
+      messages = result ? [] : @account.errors.full_messages
+    end
+    "(#{{'result' => result, 'messages' => messages}.to_json})"
   end
+
+  def login
+    @title = 'Login'
+    if request.post?
+      name = request['name']
+      password = passwd( request['password'])
+      @account = Account.first( :name => name, :password => password)
+      session[:account] = @account.id if @account
+      result = true
+    end
+    "(#{{'result' => result}.to_json})"
+  end
+
+  def logout
+    session[:account] = nil
+    redirect_referer
+  end
+
 end

@@ -76,3 +76,73 @@ div#rooms > ul > li.e {
 div#rooms > ul > li.o {
     background-color: #ddd;
 }
+
+div.head_dialog {
+    display: none;
+    box-shadow: 3px 3px 10px #aaa;
+    -moz-box-shadow: 3px 3px 10px #aaa;
+    -webkit-box-shadow: 3px 3px 10px #aaa;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    padding: 1em;
+    background-color: #f8f6f4;
+    border: #2c211a 3px solid;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+div.head_dialog th {
+    font-size: 13px;
+    font-weight: normal;
+    text-align: right;
+    padding-right: 10px;
+}
+div.head_dialog td input.text {
+    background-color: #fff;
+    height: 15px;
+    padding: 5px;
+    border: #bbb 1px solid;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+
+ul#head_panel {
+    margin: 0;
+    padding: 10px 20px;
+    background: #421163;
+}
+ul#head_panel li {
+    display: inline;
+}
+ul#head_panel li > a:link, ul#head_panel li > a:visited {
+    color: #d1b5f5;
+    border: 1px solid #d1b5f5;
+    padding: 1px 5px;
+    border-radius:         2em;
+    -moz-border-radius:    2em;
+    -webkit-border-radius: 2em;
+    -o-border-radius:      2em;
+    text-decoration: none;
+}
+ul#head_panel li > a:active, ul#head_panel li > a:hover {
+    color: #d55;
+    border: 2px solid #d55;
+    text-decoration: none;
+}
+
+div#global_dialog {
+    text-align: center;
+    background-color: #f8f6f4;
+    border-bottom: #2c211a solid 3px;
+    width: 100%;
+    padding: 1em;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+

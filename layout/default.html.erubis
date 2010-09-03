@@ -14,11 +14,149 @@
     <meta name="author" content="Max Mustermann" />
     <meta name="date" content="<%= Time.now.iso8601 %>" />
     <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+    <script src="/js/jquery.js"></script>
   </head>
   <body>
+<div id="global_dialog">&nbsp;</div>
+  <script type="text/javascript">
+    function lolClose()
+    {
+      $('#global_dialog').slideUp(300);
+    };
+    function lolDialog(s)
+    {
+      $('#global_dialog').html(s);
+      $('#global_dialog').click(function(){lolClose()});
+      $('#global_dialog').slideDown(300, function(){
+        setTimeout( function(){
+          lolClose();
+        }, 10000);
+      });
+    };
+  </script>
+
+<!-- These two dialogs will be parted into partials or helpers -->
+<div id="login_dialog" class="head_dialog">
+  <form>
+    <table>
+      <tr>
+        <th><label for="login_email">ログイン</th>
+        <td><input id="login_email" class="text" type="text" value="" /></td>
+      </tr>
+      <tr>
+        <th><label for="login_passwd">パスワード</th>
+        <td><input id="login_passwd" class="text" type="password" value="" /></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input id="login_submit" type="button" class="button" value="ログイン" />
+          <a href="#" class="closing">閉じる</a>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+<div id="signup_dialog" class="head_dialog">
+  <form>
+    <table>
+      <tr>
+        <th><label for="signup_email">メールアドレス</th>
+        <td><input id="signup_email" class="text" type="text" value="" /></td>
+      </tr>
+      <tr>
+        <th><label for="signup_id">ニックネーム</th>
+        <td><input id="signup_id" class="text" type="text" value="" /></td>
+      </tr>
+      <tr>
+        <th><label for="signup_passwd">パスワード</th>
+        <td><input id="signup_passwd" class="text" type="password" value="" /></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input type="button" id="signup_submit" class="button" value="登録" />
+          <a href="#" class="closing">閉じる</a>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+<script type="text/javascript">
+  $('#signup_submit').click(function(){
+    var nickname = $('#signup_id').val();
+    var email    = $('#signup_email').val();
+    var passwd   = $('#signup_passwd').val();
+    $.post('/signup', {name: nickname, mail: email, password: passwd}, function(data){
+      h = eval(data);
+      if(h['result']){
+        lolDialog('アカウントを作成しました。');
+      }else{
+        var s = '';
+        for( var i = 0; i < h.messages.length; i++){
+          s += '<li>' + h.messages[i] + '</li>';
+        }
+        lolDialog('アカウント作成に失敗しました: ' + '<ul>' + s + '</ul>');
+      }
+    });
+  });
+</script>
+<script type="text/javascript">
+  $('#login_submit').click(function(){
+    var mail_addr    = $('#login_email').val();
+    var passwd   = $('#login_passwd').val();
+    $.post('/login', {name: mail_addr, password: passwd}, function(data){
+      h = eval(data);
+      if(h['result']){
+        lolDialog('ログインに成功しました。<a href="/">ページを更新</a>します。');
+        setTimeout( function(){
+          location.reload(true);
+        }, 2500);
+      }else{
+        lolDialog('ログインに失敗しました');
+      }
+    });
+  });
+</script>
     <h1><%= @title.sub('Shared', '<strong>Shared</strong>') %></h1>
+    <ul id="head_panel">
+      <% if current_account %>
+        <li><a href="/home">Dashboard</a></li>
+        <li><a href="/logout">Logout</a></li>
+      <% else %>
+        <li><a href="/signup" id="signup">Signup</a></li>
+        <li><a href="/login" id="login">Login</a></li>
+      <% end %>
+    </ul>
+
     <div id="content">
       <%= @content %>
     </div>
+<script type="text/javascript">
+  var show_dialog = function(id){
+    var pos = $(id).offset();
+    var dialog = $(id + '_dialog');
+    $('.head_dialog').fadeOut(250);
+    dialog.css('left', pos.left);
+    dialog.css('top',  pos.top);  
+    dialog.fadeIn(250);
+    return false;
+  }
+
+  $('#signup').click(function(){
+    show_dialog('#signup');
+    return false;
+  });
+
+  $('#login').click(function(){
+    show_dialog('#login');
+    return false;
+  });
+
+  $('.head_dialog .closing').click(function(){
+    $('.head_dialog').fadeOut(250);
+    return false;
+  });
+
+</script>
+
   </body>
 </html>

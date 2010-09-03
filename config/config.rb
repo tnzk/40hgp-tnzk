@@ -1,7 +1,7 @@
 # Configure the application 
 options = {
   'development' => {
-    :database => "sqlite3://#{Ramaze.options.roots.first}/db/40hgp.db",
+    :database => "sqlite3://#{ENV['APP_ROOT']}/db/40hgp.db",
     :port     => 3030
   }
 }
@@ -34,6 +34,7 @@ Ramaze.options.views = ['view']
 # Load models
 $: << '.'
 require 'model/room'
+require 'model/account'
 
 # Load controllers
 # Ramaze.acquire "#{ENV['APP_ROOT']}/lib/nobela/jp/*"

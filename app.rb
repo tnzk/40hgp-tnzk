@@ -11,6 +11,7 @@ Ramaze.options.roots = [__DIR__]
 
 # Initialize controllers and models
 require __DIR__('model/init')
+ENV['APP_ROOT'] = Ramaze.options.roots.first
 require "#{Ramaze.options.roots.first}/config/config"
 require __DIR__('controller/init')
 
