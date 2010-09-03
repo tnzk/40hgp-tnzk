@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  border-bottom: #aaa 1px solid;
+  background: #ddd;
+  color: #333;
+  margin: 0;
+  padding: 0.5em;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+}
+
+#content {
+  margin: 1em;
+  background: #fff;
+  padding: 1em;
+}
+
+p {
+  margin: 1em;
+}
+
+ul, ol {
+  margin-left: 3em;
+}
