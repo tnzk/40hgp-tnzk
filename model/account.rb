@@ -12,6 +12,7 @@ class Account
   property :mp_max,     Integer,  :required => false
   property :x,          Integer,  :required => false
   property :y,          Integer,  :required => false
+  property :direction,  Integer,  :required => false  
 
   property :join_id,    Integer,  :required => false # For relation, workaround
 

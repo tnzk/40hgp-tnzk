@@ -20,9 +20,19 @@ class HomeController < Ramaze::Controller
 
   def look
     me = current_account
-    json = { :around => Room.get(me.join_id).look(me.x, me.y)
+    json = { :around => Room.get(me.join_id).look(me.x, me.y),
+             :direction => me.direction
     }.to_json
     "(#{json})"
+  end
+
+  def turn(direction)
+    me = current_account
+    me.direction = direction
+    me.save
+    json = { :result => true
+    }.to_json
+    "(#{json})"    
   end
 
 end

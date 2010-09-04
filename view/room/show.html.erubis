@@ -1,8 +1,8 @@
 <canvas id="display" width="640" height="480">
 </canvas>
-
 階層: <%= @room.floor %><br />
 名前: <%= @room.name %><br />
+名前: <%= current_account.direction %><br />
 参加者: <%= @room.insiders.map{|account| account.name}.join(' / ') %><br />
 <% if @room.joined?(current_account.id) -%>
   <a href="/home/leave/<%= @room.id %>">退出する</a>
@@ -30,6 +30,23 @@
         ctx.fillRect( i * 60 + offset_x, j * 60 + offset_y, 60, 60);
       }
     }
+    ctx.fillStyle = 'rgb( 190, 190, 200)';
+    ctx.fillRect( 300, 220, 40, 40);
+    ctx.fillStyle = 'black';
+    switch(statement.direction){
+      case 0: // left
+        ctx.fillRect( 300, 235, 10, 10);
+        break;
+      case 1: // up
+        ctx.fillRect( 315, 220, 10, 10);
+        break;
+      case 2: //right
+        ctx.fillRect( 330, 235, 10, 10);
+        break;
+      case 3: //down
+        ctx.fillRect( 315, 250, 10, 10);
+        break;
+    }
   }
 
   stat = {
@@ -42,10 +59,40 @@
     ]
   };
 
-  $.get( '/home/look', function(data){
-    draw(eval(data));
+
+  redraw = function(){
+    $.get( '/home/look', function(data){
+      draw(eval(data));
+    });
+  };
+
+  redraw();
+
+  $().ready( function(){
+    draw(stat);
+    $(window).keydown(function(e){
+      var should_through = true;
+      switch(e.keyCode){
+        case 37: // left
+          $.get( '/home/turn/0', function(data){ redraw(); });
+          should_through = false;
+          break;
+        case 38: // up
+          $.get( '/home/turn/1', function(data){ redraw(); });
+          should_through = false;
+          break;
+        case 39: //right
+          $.get( '/home/turn/2', function(data){ redraw(); });
+          should_through = false;
+          break;
+        case 40: //down
+          $.get( '/home/turn/3', function(data){ redraw(); });
+          should_through = false;
+          break;
+      }
+      return should_through;
+    });
   });
 
-  $().ready( function(){ draw(stat)});
 </script>
 
