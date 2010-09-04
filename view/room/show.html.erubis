@@ -127,7 +127,10 @@
       }
       return should_through;
     });
-  });
+    setInterval( function(){
+      redraw();
+    }, 2000);
 
+  });
 </script>
 
