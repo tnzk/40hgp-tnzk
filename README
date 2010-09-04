@@ -1,0 +1,10 @@
+
+Needed gems(maybe you have to install more)
+
+  datamapper (1.0.0)
+  do_sqlite3 (0.10.2)
+  erubis (2.6.6)
+  ramaze (2010.06.18)
+  rdiscount (1.6.5)
+
+Then rackup
