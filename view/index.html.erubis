@@ -1,5 +1,5 @@
 <div id="rooms">
-  <div id="title">Rooms available</div>
+  <div id="title">待機中の部屋</div>
   <ul>
    <% i = 0 %>
    <% if @rooms -%>
@@ -12,12 +12,15 @@
    <% end -%>
   </ul>
   <div id="create">
-    <a href="/room/create" class="need_signin">Create new room...</a>
+    <a href="/room/create" class="need_signin">部屋をつくる</a>
   </div>
 </div>
 
 
-<p><strong>Shared</strong> - Multiplayer Online Rogue-like game</p>
+<p><strong>さがします</strong> - たくさんっぽいNPCの中からもうひとりのプレイヤーを探します。</p>
 <p>
-This is just a cheap game pretenting to be <a href="http://en.wikipedia.org/wiki/Mystery_Dungeon:_Shiren_the_Wanderer" target="_blank">風来のシレン</a> and is very clone, the only one thing different is that you can play this with (an)other player(s).
+NPCはだいたい役に立ちませんが、もうひとりのプレイヤーと会話したことがあるNPCはそれらしいことを言ってくれます。
+</p>
+<p>
+新しい部屋をつくるか、誰かがつくって待機中の部屋に入ってください→
 </p>

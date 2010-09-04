@@ -18,6 +18,7 @@ class Room
   def join(user_id)
     self.players = JSON.parse(self.players).push(user_id).to_json
     self.token = user_id
+    self.floor += 1
     self.save
     account = Account.get(user_id)
     account.x = rand(50)
@@ -107,7 +108,6 @@ class Room
   end
 
   def down!
-    self.floor += 1
     # Generate 50x50 blank map and save it as json
     arrs = []
     50.times do

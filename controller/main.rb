@@ -14,7 +14,7 @@ class MainController < Ramaze::Controller
   
   def index
     @title = 'Home'
-    @rooms = Room.all(:order => [:id.desc])
+    @rooms = Room.all(:order => [:id.desc], :floor.lt => 2)
   end
 
   def signup

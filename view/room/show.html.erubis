@@ -1,3 +1,7 @@
+<div id="succeeded">
+<p>COMPLETE!</p>
+<p><a href="/">Back</a></p>
+</div>
 <div id="panel">
 <div id="message">だれもいない。</div>
 <canvas id="display" width="640" height="480">
@@ -12,25 +16,9 @@
     <th>参加者</th>
     <td id="attendant"></td>
   </tr>
-  <tr>
-    <th>座標</th>
-    <td id="pos"></td>
-  </tr>
-  <tr>
-    <th>行動待ち</th>
-    <td id="token"></td>
-  </tr>
-  <tr>
-    <th>階層</th>
-    <td id="floor"></td>
-  </tr>
 </table>
 <ul>
 <% if @room.joined?(current_account.id) -%>
-  <% if @room.account != current_account -%>
-    <li><a href="#" id="track_master">ルームマスターを追跡</a></li>
-    <li><a href="#" id="stop_tracking">追跡やめる</a></li>
-  <% end -%>
   <li><a href="/home/leave/<%= @room.id %>">退出する</a></li>
 <% else -%>
   <li><a href="/home/join/<%= @room.id %>">参加する</a></li>
@@ -60,9 +48,7 @@
     var around = statement.around;
     var plys = statement['partners'];
 
-    $('#token' ).html(statement.owner);
     $('#attendant' ).html(statement.attendant);
-    $('#floor' ).html(statement.floor);
 
     var mapimg = new Image();
     var chrimg = new Image();
@@ -149,6 +135,13 @@
           if( cache.direction == 1){ tx = 2; ty = 1;}
           if( cache.direction == 2){ tx = 3; ty = 2;}
           if( cache.direction == 3){ tx = 2; ty = 3;}
+          for( var i = 0; i < cache.partners.length; i++){
+            var ply = cache.partners[i];
+            if( ply.x == tx && ply.y == ty) {
+              ply.d = (cache.direction < 2) ? cache.direction + 2 : cache.direction - 2;
+              $('#succeeded').fadeIn(1000);
+            }            
+          }
           for( var i = 0; i < cache.npcs.length; i++){
             var npc = cache.npcs[i];
             if( npc.x == tx && npc.y == ty) {
