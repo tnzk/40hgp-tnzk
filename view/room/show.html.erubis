@@ -45,6 +45,7 @@
   ];
 
   draw = function( statement){
+
     var around = statement.around;
     var plys = statement['partners'];
 
@@ -52,11 +53,13 @@
     $('#attendant' ).html(statement.attendant);
     $('#floor' ).html(statement.floor);
 
+    var mapimg = new Image();
+    mapimg.src = "/images/mapchip.bmp";
+
     var ctx = document.getElementById('display').getContext('2d');
     for( var i = 0; i < 5; i++){
       for( var j = 0; j < 5; j++){
-        ctx.fillStyle = chips[around[j][i]];
-        ctx.fillRect( i * 60 + offset_x, j * 60 + offset_y, 60, 60);
+        ctx.drawImage( mapimg, around[j][i] * 32, 0, 32, 32, i * 60 + offset_x, j * 60 + offset_y, 60, 60);
       }
     }
 
