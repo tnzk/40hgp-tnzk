@@ -59,7 +59,7 @@ class HomeController < Ramaze::Controller
   def track(user_id)
     me = current_account
     me.track_to = user_id
-    me.save
+    p me.save
     json = { :result => true}.to_json
     "(#{json})"    
   end

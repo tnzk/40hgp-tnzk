@@ -43,7 +43,7 @@ class Account
     room.insiders.each do |account|
       x = account.x - me.x + 2
       y = account.y - me.y + 2
-      around[y][x] = 1
+      around[y][x] = 1 if x > 0 && y > 0 && x < 5 && y < 5
     end
     case me.direction
     when 0 then me.x -= 1 if around[2][1] == 0

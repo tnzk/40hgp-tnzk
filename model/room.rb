@@ -67,8 +67,22 @@ class Room
       if insiders.shift.id == now
         nxt_candicate = insiders.shift
         if nxt_candicate
-          if nxt_candicate.track_to
-            nxt_candicate.direction = rand(4)
+          if nxt_candicate.track_to.to_i != 0
+            target = Account.get(nxt_candicate.track_to)
+            dx = target.x - nxt_candicate.x
+            dy = target.y - nxt_candicate.y
+            if dx.abs == dy.abs
+              dx += rand(3) - 1
+              dy += rand(3) - 1
+            end
+            if dx.abs > dy.abs
+              nxt_candicate.direction = 0 if dx < 0
+              nxt_candicate.direction = 2 if dx > 0
+            end
+            if dx.abs < dy.abs
+              nxt_candicate.direction = 1 if dy < 0
+              nxt_candicate.direction = 3 if dy > 0
+            end
             nxt_candicate.move!(self)
             next
           end

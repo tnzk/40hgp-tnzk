@@ -24,7 +24,10 @@
 </table>
 <ul>
 <% if @room.joined?(current_account.id) -%>
-  <li><a href="#" id="track_master">ルームマスターを追跡</a></li>
+  <% if @room.account != current_account -%>
+    <li><a href="#" id="track_master">ルームマスターを追跡</a></li>
+    <li><a href="#" id="stop_tracking">追跡やめる</a></li>
+  <% end -%>
   <li><a href="/home/leave/<%= @room.id %>">退出する</a></li>
 <% else -%>
   <li><a href="/home/join/<%= @room.id %>">参加する</a></li>
@@ -144,6 +147,12 @@
     $('#track_master').click( function(){
       $.get( '/home/track/<%= @room.account.id %>', function(data){
         lolDialog('ルームマスターを追跡します。');
+      });
+      return false;
+    });
+    $('#stop_tracking').click( function(){
+      $.get( '/home/track/0', function(data){
+        lolDialog('ルームマスターの追跡やめます。');
       });
       return false;
     });
