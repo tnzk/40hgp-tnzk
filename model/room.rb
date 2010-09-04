@@ -50,7 +50,9 @@ class Room
     
     for i in 0...5
       for j in 0...5
-        arrs[i][j] = field[lx + j][ly + i] if (lx + j) >= 0 && (ly + i) >= 0
+        if (lx + j) >= 0 && (ly + i) >= 0 &&  (lx + j) <= 49 && (ly + i) <= 49
+          arrs[i][j] = field[lx + j][ly + i]
+        end
       end
     end
     arrs
@@ -61,10 +63,11 @@ class Room
     self.floor += 1
     # Generate 50x50 blank map and save it as json
     arrs = []
-    seed = [0,0,0,0,2]
     50.times do
-      seed.reverse!
-      arrs << (seed * 10)
+      arrs << ([0]*50)
+    end
+    1000.times do
+      arrs[rand(50)][rand(50)] = 1
     end
     self.field = arrs.to_json
     self.save

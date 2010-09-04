@@ -20,7 +20,13 @@ class HomeController < Ramaze::Controller
 
   def look
     me = current_account
-    json = { :around => Room.get(me.join_id).look(me.x, me.y),
+    room = Room.get(me.join_id)
+    json = { :around => room.look(me.x, me.y),
+             :partners => room.insiders.delete_if{|account| account == current_account}.map{ |account|
+               { :name => account.name,
+                 :x => account.x - current_account.x + 2,
+                 :y => account.y - current_account.y + 2,
+                 :d => account.direction}},
              :direction => me.direction
     }.to_json
     "(#{json})"

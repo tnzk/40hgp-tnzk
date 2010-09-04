@@ -1,5 +1,11 @@
 <canvas id="display" width="640" height="480">
 </canvas>
+<table>
+  <tr>
+    <th>座標</th>
+    <td id="pos"></td>
+  </tr>
+</table>
 階層: <%= @room.floor %><br />
 名前: <%= @room.name %><br />
 名前: <%= current_account.direction %><br />
@@ -22,7 +28,9 @@
   ];
 
   draw = function( statement){
+    
     var around = statement.around;
+    var plys = statement['partners'];
     var ctx = document.getElementById('display').getContext('2d');
     for( var i = 0; i < 5; i++){
       for( var j = 0; j < 5; j++){
@@ -30,6 +38,35 @@
         ctx.fillRect( i * 60 + offset_x, j * 60 + offset_y, 60, 60);
       }
     }
+
+    for( i = 0; i < plys.length; i++){
+      var x  = plys[i].x;
+      var y  = plys[i].y;
+      if( x < 0 || y < 0 || x > 4 || y > 4) continue;
+      var px = x * 60 + offset_x + 10;
+      var py = y * 60 + offset_y + 10;
+      var d = plys[i].d;
+      ctx.fillStyle = 'rgb( 190, 190, 200)';
+      ctx.fillRect( px, py, 40, 40);
+      ctx.fillStyle = 'black';
+      ctx.fillText(plys[i].name, px + 15, py + 15);
+      switch(d){
+        case 0: // left
+          ctx.fillRect( px, py + 15, 10, 10);
+          break;
+        case 1: // up
+          ctx.fillRect( px + 15, py, 10, 10);
+          break;
+        case 2: //right
+          ctx.fillRect( px + 30, py + 15, 10, 10);
+          break;
+        case 3: //down
+          ctx.fillRect( px + 15, py + 30, 10, 10);
+          break;
+      }
+    }
+
+
     ctx.fillStyle = 'rgb( 190, 190, 200)';
     ctx.fillRect( 300, 220, 40, 40);
     ctx.fillStyle = 'black';
@@ -49,18 +86,12 @@
     }
   }
 
-  stat = {
-    around: [
-      [ 0, 2, 2, 2, 0],
-      [ 1, 2, 0, 0, 0],
-      [ 0, 2, 0, 1, 0],
-      [ 0, 1, 2, 3, 0],
-      [ 0, 0, 0, 0, 0]
-    ]
-  };
-
   forward = function(){
-    $.get( '/home/move', function(data){ redraw(); });
+    $.get( '/home/move', function(data){
+      var h = eval(data);
+      $('#pos').html(h.x + ',' +h.y);
+      redraw();
+    });
   };
   redraw = function(){
     $.get( '/home/look', function(data){
@@ -71,7 +102,6 @@
   redraw();
 
   $().ready( function(){
-    draw(stat);
     $(window).keydown(function(e){
       var should_through = true;
       switch(e.keyCode){

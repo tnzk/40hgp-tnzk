@@ -14,4 +14,10 @@ class RoomController < Ramaze::Controller
     @room = Room.get(id)
     @title = "Room##{id}: #{@room.name}"
   end
+
+  def debug(id)
+    @room = Room.get(id)
+    @title = "DEUGDEBUG Room##{id}: #{@room.name}"    
+  end
+
 end
