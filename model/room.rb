@@ -126,7 +126,7 @@ class Room
         duplicated = false
         npcs.each {|npc| duplicated = true if npc[:x] == x && npc[:y] == y}
       end
-      npcs << {:id => i, :type => rand(8), :x => x, :y => y, :d => rand(4), :since => 0}
+      npcs << {:id => i, :type => rand(8), :x => x, :y => y, :d => rand(4), :since => []}
       arrs[x][y] = 0
     end
 

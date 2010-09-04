@@ -66,7 +66,26 @@ class HomeController < Ramaze::Controller
   def track(user_id)
     me = current_account
     me.track_to = user_id
-    p me.save
+    json = { :result => true}.to_json
+    "(#{json})"    
+  end
+
+  def talk_with(npc_id)
+    me = current_account
+    room = Room.get(me.join_id)
+    npcs = JSON.parse(room.npcs)
+    newnew = npcs.map do |h|
+      since = h['since']
+      since << me.id  if h['id'] == npc_id.to_i
+      { :id    => h['id'],
+        :type  => h['type'],
+        :x     => h['x'],
+        :y     => h['y'],
+        :d     => h['d'],
+        :since => since}
+    end
+    room.npcs = newnew.to_json
+    p room.save
     json = { :result => true}.to_json
     "(#{json})"    
   end

@@ -37,12 +37,24 @@
 <% end -%>
 </ul>
 <script type="text/javascript">
+  Array.prototype.include = function(v) {
+    for( var i in this){
+      if (this[i] == v) return true;
+    }
+    return false;
+  }
+ 
   var offset_x = 170;
   var offset_y =  5;
   var direction_table = [ 1, 3, 2, 0];
+
   var serifs = [
-    'しね！', '死んでよいぞ', '死んでくれる？', '死んでください...', '死んでいただきます', '^q^', '死んでいるのは私', '死んでいいよ'
+    ['誰それ？ 知らないなー', '見慣れんものなら覚えとるはずじゃが...すまんの', '人を探してる？うーん、悪いけど心当たりないわね', '知りません。それよりみず...', 'ごめんなさい、見た覚えありません...', '人探し？知らないわよそんなこと！', '...', '...'],
+    ['その人ならさっき見かけたよ！', 'おお、見慣れないよそ者を見かけたところじゃが、そいつか？', 'みたわよ', 'みた。みず...', '見ましたわ', '見たわよ！バカにしてるの！', 'これコスプレだから。', 'あれ、本気でドラキュラとか思っちゃった？ごめんね'],
+    ['なにしてるの？', 'ここは不毛な砂漠じゃ', '簡単に人の話を信じちゃだめよ。わかった？', 'みず....', 'お散歩ですか？', '人を見た目でツンデレだとか決めつけるんじゃないわよ！', '...', '...']
   ];
+
+
   draw = function( statement){
 
     var around = statement.around;
@@ -141,7 +153,13 @@
             var npc = cache.npcs[i];
             if( npc.x == tx && npc.y == ty) {
               npc.d = (cache.direction < 2) ? cache.direction + 2 : cache.direction - 2;
-              $('#message').html(serifs[npc.type]);
+              var speak = 0;
+              for( var j = 0; j < npc.since.length; j++){
+                if(npc.since[j] != <%= current_account.id %>) speak = 1;
+              }
+              $('#message').html(serifs[speak][npc.type]);
+              $.get( '/home/talk_with/' + npc.id, function(data){
+              });
             }
           }
 
