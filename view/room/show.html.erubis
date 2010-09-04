@@ -36,6 +36,7 @@
 <script type="text/javascript">
   var offset_x = 170;
   var offset_y =  90;
+  var direction_table = [ 1, 3, 2, 0];
   var chips = [
     'rgb( 108, 183, 117)',
     'rgb( 120, 103, 111)',
@@ -54,7 +55,9 @@
     $('#floor' ).html(statement.floor);
 
     var mapimg = new Image();
+    var chrimg = new Image();
     mapimg.src = "/images/mapchip.bmp";
+    chrimg.src = "/images/chachip.png";
 
     var ctx = document.getElementById('display').getContext('2d');
     for( var i = 0; i < 5; i++){
@@ -68,61 +71,36 @@
       var y  = plys[i].y;
       if( x < 0 || y < 0 || x > 4 || y > 4) continue;
       var px = x * 60 + offset_x + 10;
-      var py = y * 60 + offset_y + 10;
+      var py = y * 60 + offset_y;
       var d = plys[i].d;
-      ctx.fillStyle = 'rgb( 190, 190, 200)';
-      ctx.fillRect( px, py, 40, 40);
-      ctx.fillStyle = 'black';
-      ctx.fillText(plys[i].name, px + 15, py + 15);
-      switch(d){
-        case 0: // left
-          ctx.fillRect( px, py + 15, 10, 10);
-          break;
-        case 1: // up
-          ctx.fillRect( px + 15, py, 10, 10);
-          break;
-        case 2: //right
-          ctx.fillRect( px + 30, py + 15, 10, 10);
-          break;
-        case 3: //down
-          ctx.fillRect( px + 15, py + 30, 10, 10);
-          break;
-      }
+      ctx.drawImage( chrimg, (plys[i].name.charCodeAt(0) & 7) * 96 + anim * 32, direction_table[d] * 48, 32, 48, px, py, 32, 48);
     }
-
-    ctx.fillStyle = 'rgb( 190, 190, 200)';
-    ctx.fillRect( 300, 220, 40, 40);
-    ctx.fillStyle = 'black';
-    switch(statement.direction){
-      case 0: // left
-        ctx.fillRect( 300, 235, 10, 10);
-        break;
-      case 1: // up
-        ctx.fillRect( 315, 220, 10, 10);
-        break;
-      case 2: //right
-        ctx.fillRect( 330, 235, 10, 10);
-        break;
-      case 3: //down
-        ctx.fillRect( 315, 250, 10, 10);
-        break;
-    }
+    ctx.drawImage( chrimg, <%= current_account.name.bytes.to_a[0] & 7 %> * 96 + anim * 32, direction_table[statement.direction] * 48, 32, 48, 304, 210, 32, 48);
   }
 
   forward = function(){
     $.get( '/home/move', function(data){
       var h = eval(data);
       $('#pos').html(h.x + ',' +h.y);
+      update();
+    });
+  };
+
+  var cache = null;
+  var anim = 0;
+  update = function(){
+    $.get( '/home/look', function(data){
+      cache = eval(data);
       redraw();
     });
   };
   redraw = function(){
-    $.get( '/home/look', function(data){
-      draw(eval(data));
-    });
+    anim++;
+    if(anim > 2) anim = 0;
+    draw(cache);
   };
 
-  redraw();
+  update();
 
   $().ready( function(){
     $(window).keydown(function(e){
@@ -161,7 +139,7 @@
     });
     setInterval( function(){
       redraw();
-    }, 2000);
+    }, 200);
 
   });
 </script>
