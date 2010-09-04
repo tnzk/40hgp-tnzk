@@ -153,3 +153,19 @@ canvas#display {
     float: right;
     margin: 10px 50px;
 }
+
+table#room_status {
+    border-left: solid #ccc 1px;
+}
+
+table#room_status th {
+    font-weight: normal;
+    text-align: right;
+    margin: 0;
+    padding: 4px 5px;
+}
+
+table#room_status td {
+    border-bottom: #ccc solid 1px;
+    padding: 5px; 
+}

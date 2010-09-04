@@ -28,7 +28,9 @@ class HomeController < Ramaze::Controller
                  :y => account.y - current_account.y + 2,
                  :d => account.direction}},
              :direction => me.direction,
-             :owner => room.owner.name
+             :owner => room.owner.name,
+             :attendant => room.insiders.map{|account| account.name}.join(' / '),
+             :floor => room.floor
     }.to_json
     "(#{json})"
   end

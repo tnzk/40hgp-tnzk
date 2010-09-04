@@ -1,6 +1,14 @@
 <canvas id="display" width="640" height="480">
 </canvas>
-<table>
+<table id="room_status">
+  <tr>
+    <th>名前</th>
+    <td id="name"><%= current_account.name %></td>
+  </tr>
+  <tr>
+    <th>参加者</th>
+    <td id="attendant"></td>
+  </tr>
   <tr>
     <th>座標</th>
     <td id="pos"></td>
@@ -9,11 +17,11 @@
     <th>行動待ち</th>
     <td id="token"></td>
   </tr>
+  <tr>
+    <th>階層</th>
+    <td id="floor"></td>
+  </tr>
 </table>
-階層: <%= @room.floor %><br />
-名前: <%= @room.name %><br />
-名前: <%= current_account.direction %><br />
-参加者: <%= @room.insiders.map{|account| account.name}.join(' / ') %><br />
 <% if @room.joined?(current_account.id) -%>
   <a href="/home/leave/<%= @room.id %>">退出する</a>
 <% else -%>
@@ -34,7 +42,11 @@
   draw = function( statement){
     var around = statement.around;
     var plys = statement['partners'];
-    $('#token').html(statement.owner);
+
+    $('#token' ).html(statement.owner);
+    $('#attendant').html(statement.attendant);
+    $('#floor' ).html(statement.floor);
+
     var ctx = document.getElementById('display').getContext('2d');
     for( var i = 0; i < 5; i++){
       for( var j = 0; j < 5; j++){
