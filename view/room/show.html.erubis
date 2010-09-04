@@ -22,12 +22,14 @@
     <td id="floor"></td>
   </tr>
 </table>
+<ul>
 <% if @room.joined?(current_account.id) -%>
-  <a href="/home/leave/<%= @room.id %>">退出する</a>
+  <li><a href="#" id="track_master">ルームマスターを追跡</a></li>
+  <li><a href="/home/leave/<%= @room.id %>">退出する</a></li>
 <% else -%>
-  <a href="/home/join/<%= @room.id %>">参加する</a>
+  <li><a href="/home/join/<%= @room.id %>">参加する</a></li>
 <% end -%>
-
+</ul>
 <script type="text/javascript">
   var offset_x = 170;
   var offset_y =  90;
@@ -44,7 +46,7 @@
     var plys = statement['partners'];
 
     $('#token' ).html(statement.owner);
-    $('#attendant').html(statement.attendant);
+    $('#attendant' ).html(statement.attendant);
     $('#floor' ).html(statement.floor);
 
     var ctx = document.getElementById('display').getContext('2d');
@@ -138,6 +140,12 @@
           break;
       }
       return should_through;
+    });
+    $('#track_master').click( function(){
+      $.get( '/home/track/<%= @room.account.id %>', function(data){
+        lolDialog('ルームマスターを追跡します。');
+      });
+      return false;
     });
     setInterval( function(){
       redraw();

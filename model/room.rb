@@ -67,6 +67,11 @@ class Room
       if insiders.shift.id == now
         nxt_candicate = insiders.shift
         if nxt_candicate
+          if nxt_candicate.track_to
+            nxt_candicate.direction = rand(4)
+            nxt_candicate.move!(self)
+            next
+          end
           self.token = nxt_candicate.id
         else
           # NPC AI

@@ -14,6 +14,7 @@ class Account
   property :y,          Integer,  :required => false
   property :direction,  Integer,  :required => false  
 
+  property :track_to,   Integer,  :required => false # For relation, workaround
   property :join_id,    Integer,  :required => false # For relation, workaround
 
   timestamps :at
@@ -36,5 +37,21 @@ class Account
     "http://www.gravatar.com/avatar/#{ Digest::MD5.hexdigest( self.email.chomp.downcase).to_s}?s=#{size}&r=g&d=identicon"
   end
   
+  def move!(room)
+    me = self
+    around = room.look(me.x, me.y)
+    room.insiders.each do |account|
+      x = account.x - me.x + 2
+      y = account.y - me.y + 2
+      around[y][x] = 1
+    end
+    case me.direction
+    when 0 then me.x -= 1 if around[2][1] == 0
+    when 1 then me.y -= 1 if around[1][2] == 0
+    when 2 then me.x += 1 if around[2][3] == 0
+    when 3 then me.y += 1 if around[3][2] == 0
+    end
+    me.save
+  end
 
 end
