@@ -45,6 +45,11 @@ class Account
       y = account.y - me.y + 2
       around[y][x] = 1 if x > 0 && y > 0 && x < 5 && y < 5
     end
+    room.visible_npcs(me.x, me.y).each do |npc|
+      x = npc['x'] - me.x + 2
+      y = npc['y'] - me.y + 2
+      around[y][x] = 1 if x > 0 && y > 0 && x < 5 && y < 5
+    end
     case me.direction
     when 0 then me.x -= 1 if around[2][1] == 0
     when 1 then me.y -= 1 if around[1][2] == 0

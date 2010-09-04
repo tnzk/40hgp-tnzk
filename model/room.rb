@@ -119,7 +119,15 @@ class Room
 
     npcs = []
     100.times do |i|
-      npcs << {:id => i, :type => rand(8), :x => rand(50), :y => rand(50), :d => rand(4), :since => 0}
+      duplicated = true
+      while duplicated
+        x = rand(50)
+        y = rand(50)
+        duplicated = false
+        npcs.each {|npc| duplicated = true if npc[:x] == x && npc[:y] == y}
+      end
+      npcs << {:id => i, :type => rand(8), :x => x, :y => y, :d => rand(4), :since => 0}
+      arrs[x][y] = 0
     end
 
     self.field = arrs.to_json

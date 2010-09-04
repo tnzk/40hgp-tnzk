@@ -115,7 +115,6 @@
     });
   });
 </script>
-    <h1><strong>Share</strong> - Multiplayer Online Rogue-like game</h1>
     <ul id="head_panel">
       <% if current_account %>
         <li><a href="/home">Dashboard</a></li>

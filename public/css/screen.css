@@ -150,8 +150,19 @@ canvas#display {
     width:  640px;
     height: 480px;
     background: #333;
-    float: right;
     margin: 10px 50px;
+}
+
+div#message {
+    border: #777 2px solid;
+    color: #555;
+    padding: 5px;
+    font-size: 16px;
+}
+div#panel {
+    width:  650px;
+    float: right;
+    margin: 10px 50px;  
 }
 
 table#room_status {
