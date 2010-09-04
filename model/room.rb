@@ -18,8 +18,8 @@ class Room
     self.players = JSON.parse(self.players).push(user_id).to_json
     self.save
     account = Account.get(user_id)
-    account.x = 0
-    account.y = 0
+    account.x = 5
+    account.y = 5
     account.hp_max = account.hp = 0
     account.mp_max = account.mp = 0
     account.join_id = self.id
@@ -47,9 +47,10 @@ class Room
     5.times{ arrs << ([1]*5)}
     lx = x - 2
     ly = y - 2
-    for i in ly...(ly + 5)
-      for j in lx...(lx + 5)
-        arrs[j + 2][i + 2] = field[j][i] if j >= 0 && i >= 0
+    
+    for i in 0...5
+      for j in 0...5
+        arrs[i][j] = field[lx + j][ly + i] if (lx + j) >= 0 && (ly + i) >= 0
       end
     end
     arrs
@@ -60,10 +61,10 @@ class Room
     self.floor += 1
     # Generate 50x50 blank map and save it as json
     arrs = []
-    seed = [0,2]
+    seed = [0,0,0,0,2]
     50.times do
       seed.reverse!
-      arrs << (seed * 25)
+      arrs << (seed * 10)
     end
     self.field = arrs.to_json
     self.save

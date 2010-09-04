@@ -59,7 +59,9 @@
     ]
   };
 
-
+  forward = function(){
+    $.get( '/home/move', function(data){ redraw(); });
+  };
   redraw = function(){
     $.get( '/home/look', function(data){
       draw(eval(data));
@@ -74,19 +76,19 @@
       var should_through = true;
       switch(e.keyCode){
         case 37: // left
-          $.get( '/home/turn/0', function(data){ redraw(); });
+          $.get( '/home/turn/0', function(data){ forward();});
           should_through = false;
           break;
         case 38: // up
-          $.get( '/home/turn/1', function(data){ redraw(); });
+          $.get( '/home/turn/1', function(data){ forward(); });
           should_through = false;
           break;
         case 39: //right
-          $.get( '/home/turn/2', function(data){ redraw(); });
+          $.get( '/home/turn/2', function(data){ forward(); });
           should_through = false;
           break;
         case 40: //down
-          $.get( '/home/turn/3', function(data){ redraw(); });
+          $.get( '/home/turn/3', function(data){ forward(); });
           should_through = false;
           break;
       }
