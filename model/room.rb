@@ -7,6 +7,7 @@ class Room
   property :field,     Text
   property :players,   Text,    :default => '[]'
   property :statement, Text,    :default => '[]'
+  property :token,     Integer
  
 
   timestamps :at
@@ -16,6 +17,7 @@ class Room
 
   def join(user_id)
     self.players = JSON.parse(self.players).push(user_id).to_json
+    self.token = user_id
     self.save
     account = Account.get(user_id)
     account.x = 5
@@ -58,6 +60,27 @@ class Room
     arrs
   end
 
+  def next!
+    now = self.token
+    insiders = self.insiders
+    while !insiders.empty?
+      if insiders.shift.id == now
+        nxt_candicate = insiders.shift
+        if nxt_candicate
+          self.token = nxt_candicate.id
+        else
+          # NPC AI
+          self.token = self.insiders[0].id
+        end
+        self.save
+        return self.token
+      end
+    end
+  end
+
+  def owner
+    Account.get(self.token)
+  end
 
   def down!
     self.floor += 1

@@ -27,22 +27,29 @@ class HomeController < Ramaze::Controller
                  :x => account.x - current_account.x + 2,
                  :y => account.y - current_account.y + 2,
                  :d => account.direction}},
-             :direction => me.direction
+             :direction => me.direction,
+             :owner => room.owner.name
     }.to_json
     "(#{json})"
   end
 
   def move
+    result = false
     me = current_account
-    around = Room.get(me.join_id).look(me.x, me.y)
-    case me.direction
-    when 0 then me.x -= 1 if around[2][1] == 0
-    when 1 then me.y -= 1 if around[1][2] == 0
-    when 2 then me.x += 1 if around[2][3] == 0
-    when 3 then me.y += 1 if around[3][2] == 0
+    room = Room.get(me.join_id)
+    if room.token == me.id
+      around = room.look(me.x, me.y)
+      case me.direction
+      when 0 then me.x -= 1 if around[2][1] == 0
+      when 1 then me.y -= 1 if around[1][2] == 0
+      when 2 then me.x += 1 if around[2][3] == 0
+      when 3 then me.y += 1 if around[3][2] == 0
+      end
+      me.save
+      room.next!
+      result = true
     end
-    me.save
-    json = { :result => true, :x => me.x, :y => me.y}.to_json
+    json = { :result => result, :x => me.x, :y => me.y}.to_json
     "(#{json})"
   end
 

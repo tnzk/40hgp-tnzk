@@ -5,6 +5,10 @@
     <th>座標</th>
     <td id="pos"></td>
   </tr>
+  <tr>
+    <th>行動待ち</th>
+    <td id="token"></td>
+  </tr>
 </table>
 階層: <%= @room.floor %><br />
 名前: <%= @room.name %><br />
@@ -28,9 +32,9 @@
   ];
 
   draw = function( statement){
-    
     var around = statement.around;
     var plys = statement['partners'];
+    $('#token').html(statement.owner);
     var ctx = document.getElementById('display').getContext('2d');
     for( var i = 0; i < 5; i++){
       for( var j = 0; j < 5; j++){
@@ -65,7 +69,6 @@
           break;
       }
     }
-
 
     ctx.fillStyle = 'rgb( 190, 190, 200)';
     ctx.fillRect( 300, 220, 40, 40);
