@@ -1,7 +1,8 @@
 # Configure the application 
 options = {
   'development' => {
-    :database => "sqlite3://#{ENV['APP_ROOT']}/db/40hgp.db",
+    # :database => "sqlite3://#{ENV['APP_ROOT']}/db/40hgp.db",
+    :database => "sqlite:memory:",
     :port     => 3030
   }
 }

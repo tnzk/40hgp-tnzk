@@ -66,6 +66,16 @@
       }
     }
 
+    var npcs = statement['npcs'];
+    for( i = 0; i < npcs.length; i++){
+      var x  = npcs[i].x;
+      var y  = npcs[i].y;
+      if( x < 0 || y < 0 || x > 4 || y > 4) continue;
+      var px = x * 60 + offset_x + 10;
+      var py = y * 60 + offset_y;
+      var d = npcs[i].d;
+      ctx.drawImage( chrimg, npcs[i].type * 96 + anim * 32, direction_table[d] * 48, 32, 48, px, py, 40, 60);
+    }
     for( i = 0; i < plys.length; i++){
       var x  = plys[i].x;
       var y  = plys[i].y;
@@ -73,9 +83,9 @@
       var px = x * 60 + offset_x + 10;
       var py = y * 60 + offset_y;
       var d = plys[i].d;
-      ctx.drawImage( chrimg, (plys[i].name.charCodeAt(0) & 7) * 96 + anim * 32, direction_table[d] * 48, 32, 48, px, py, 32, 48);
+      ctx.drawImage( chrimg, (plys[i].name.charCodeAt(0) & 7) * 96 + anim * 32, direction_table[d] * 48, 32, 48, px, py, 40, 60);
     }
-    ctx.drawImage( chrimg, <%= current_account.name.bytes.to_a[0] & 7 %> * 96 + anim * 32, direction_table[statement.direction] * 48, 32, 48, 304, 210, 32, 48);
+    ctx.drawImage( chrimg, <%= current_account.name.bytes.to_a[0] & 7 %> * 96 + anim * 32, direction_table[statement.direction] * 48, 32, 48, 304, 210, 40, 60);
   }
 
   forward = function(){
@@ -139,7 +149,7 @@
     });
     setInterval( function(){
       redraw();
-    }, 200);
+    }, 800);
 
   });
 </script>

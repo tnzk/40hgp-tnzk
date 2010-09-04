@@ -30,7 +30,14 @@ class HomeController < Ramaze::Controller
              :direction => me.direction,
              :owner => room.owner.name,
              :attendant => room.insiders.map{|account| account.name}.join(' / '),
-             :floor => room.floor
+             :floor => room.floor,
+             :npcs => room.visible_npcs(current_account.x, current_account.y).map {|h|
+               { :id => h['id'],
+                 :type => h['type'],
+                 :x => h['x'] - current_account.x + 2,
+                 :y => h['y'] - current_account.y + 2,
+                 :d => h['d'],
+                 :since => h['since']}}
     }.to_json
     "(#{json})"
   end

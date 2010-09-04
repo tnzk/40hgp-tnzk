@@ -6,10 +6,10 @@ class Room
   property :floor,     Integer, :default => 0
   property :field,     Text
   property :players,   Text,    :default => '[]'
+  property :npcs,      Text,    :default => '[]'
   property :statement, Text,    :default => '[]'
   property :token,     Integer
  
-
   timestamps :at
   timestamps :on
 
@@ -20,8 +20,8 @@ class Room
     self.token = user_id
     self.save
     account = Account.get(user_id)
-    account.x = 5
-    account.y = 5
+    account.x = rand(50)
+    account.y = rand(50)
     account.hp_max = account.hp = 0
     account.mp_max = account.mp = 0
     account.join_id = self.id
@@ -101,6 +101,11 @@ class Room
     Account.get(self.token)
   end
 
+  def visible_npcs(x,y)
+    npcs = JSON.parse(self.npcs)
+    npcs.delete_if{|npc| (npc['x'] - x).abs > 4 || (npc['y'] - y).abs > 4}
+  end
+
   def down!
     self.floor += 1
     # Generate 50x50 blank map and save it as json
@@ -109,9 +114,17 @@ class Room
       arrs << ([0]*50)
     end
     1000.times do
-      arrs[rand(50)][rand(50)] = 1
+      arrs[rand(50)][rand(50)] = rand(4)
     end
+
+    npcs = []
+    100.times do |i|
+      npcs << {:id => i, :type => rand(8), :x => rand(50), :y => rand(50), :d => rand(4), :since => 0}
+    end
+
     self.field = arrs.to_json
+    self.npcs = npcs.to_json
+
     self.save
   end
 
