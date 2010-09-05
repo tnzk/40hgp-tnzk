@@ -93,6 +93,7 @@
   };
 
   var cache = null;
+  var moomoo = 0;
   var anim = 0;
   update = function(){
     $.get( '/home/look', function(data){
@@ -101,6 +102,7 @@
     });
   };
   redraw = function(){
+    moomoo++;
     anim++;
     if(anim > 2) anim = 0;
     draw(cache);
@@ -128,7 +130,20 @@
           $.get( '/home/turn/3', function(data){ forward(); });
           should_through = false;
           break;
-        case 90: 
+        case 88:
+          if(moomoo < 1000){
+            $('#message').html('このキーにはスーパー牛さんパワーはありません。');
+          }else{
+            var s = '';
+            if(cache.partners[0].y - 2 < 0) s += '北';
+            if(cache.partners[0].y - 2 > 0) s += '南';
+            if(cache.partners[0].x - 2 < 0) s += '西';
+            if(cache.partners[0].x - 2 > 0) s += '東';
+            $('#message').html(s + 'から怪しい気配がする...');
+            moomoo = 0;
+          }
+          break;
+        case 90:
           var tx = 0;
           var ty = 0;
           if( cache.direction == 0){ tx = 1; ty = 2;}
